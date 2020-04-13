@@ -1,0 +1,42 @@
+﻿@using Sol_Demo.Pages.Demo
+
+@if (ListItem == null)
+{
+    <h1>Loading...</h1>
+}
+else
+{
+    @foreach (var data in ListItem)
+    {
+        <ChildComponent Users="data" @key="data.Id"></ChildComponent>
+
+       
+
+    }
+
+    <button class="btn btn-danger" @onclick="AddData">Add</button>
+}
+
+
+@code {
+
+    private List<UserModel> ListItem { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ListItem = new List<UserModel>();
+            ListItem.Add(new UserModel() { Id = 1, FullName = "Kishor Naik" });
+            ListItem.Add(new UserModel() { Id = 2, FullName = "Eshaan Naik" });
+
+            StateHasChanged();
+        }
+    }
+
+    private void AddData()
+    {
+        ListItem?.Add(new UserModel() { Id = 3, FullName = "Deepika Naik" });
+    }
+
+}
